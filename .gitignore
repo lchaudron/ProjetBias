@@ -9,4 +9,5 @@ __pycache__/
 # Dossiers de données (vu ton script précédent)
 # Si tu ne veux pas versionner tes CSV volumineux ou tes résultats
 data/brute/
+data/processed/
 data/mean_student/
