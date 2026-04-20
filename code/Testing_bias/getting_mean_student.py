@@ -52,6 +52,8 @@ def obtenir_profil_moyen(df, filtres=None):
 output_dir = 'data/mean_student/gend-schol-nat/'
 os.makedirs(output_dir, exist_ok=True)
 
+profil_portugais_df = obtenir_profil_moyen(df, filtres={'Nacionality': 'Portugese'})
+
 for nat in df['Nacionality'].unique():
     for gender in df['Gender'].unique():
         val_gender = int(gender) 
@@ -59,6 +61,7 @@ for nat in df['Nacionality'].unique():
         critères_specifiques = {
         'Gender': val_gender,
         'Scholarship holder': 1,
+        #'Educational special needs': 1,
         'Nacionality': nat
     }
     
@@ -70,4 +73,13 @@ for nat in df['Nacionality'].unique():
             filename = str(critères_specifiques).translate(str.maketrans({"{": "", "}": "", "'": "", " ": "", ",": "_", ":": "-"}))
             eleve_type.to_csv(f'{output_dir}{filename}.csv', index=False, sep=';')
         else:
-            print(f"Aucun profil trouvé pour les critères : {critères_specifiques}")
+            print(f"Profil inexistant pour {critères_specifiques}, création d'un profil basé sur le standard portugais.")
+        # On copie le profil portugais
+            eleve_type = profil_portugais_df.copy()
+        
+        # On injecte les valeurs forcées pour que le fichier corresponde aux critères
+            for col, val in critères_specifiques.items():
+                eleve_type[col] = val
+            
+            filename = str(critères_specifiques).translate(str.maketrans({"{": "", "}": "", "'": "", " ": "", ",": "_", ":": "-"}))
+            eleve_type.to_csv(f'{output_dir}{filename}.csv', index=False, sep=';')
