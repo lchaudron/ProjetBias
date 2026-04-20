@@ -49,22 +49,24 @@ def obtenir_profil_moyen(df, filtres=None):
 # --- EXÉCUTION ---
 
 # Dossier de sortie
-output_dir = 'data/mean_student/intersectionality/'
+output_dir = 'data/mean_student/gender/'
 os.makedirs(output_dir, exist_ok=True)
 
 for nat in df['Nacionality'].unique():
-    criteres = {
-        'Gender': 0,
-        'Scholarship holder': 1,
+    for gender in df['Gender'].unique():
+        val_gender = int(gender) 
+    
+        critères_specifiques = {
+        'Gender': val_gender,
         'Nacionality': nat
     }
     
-    eleve_type = obtenir_profil_moyen(df, filtres=criteres)
+    eleve_type = obtenir_profil_moyen(df, filtres=critères_specifiques)
     
     # On ne sauvegarde que si le DataFrame n'est pas vide
     if not eleve_type.empty:
         # Nettoyage du nom de fichier
-        filename = str(criteres).translate(str.maketrans({"{": "", "}": "", "'": "", " ": "", ",": "_", ":": "-"}))
+        filename = str(critères_specifiques).translate(str.maketrans({"{": "", "}": "", "'": "", " ": "", ",": "_", ":": "-"}))
         eleve_type.to_csv(f'{output_dir}{filename}.csv', index=False, sep=';')
     else:
-        print(f"Aucun profil trouvé pour les critères : {criteres}")
+        print(f"Aucun profil trouvé pour les critères : {critères_specifiques}")
