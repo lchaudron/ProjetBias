@@ -49,7 +49,7 @@ def obtenir_profil_moyen(df, filtres=None):
 # --- EXÉCUTION ---
 
 # Dossier de sortie
-output_dir = 'data/mean_student/gend-schol-nat/'
+output_dir = 'data/mean_student/gend-nat-schol-edn-debtor/'
 os.makedirs(output_dir, exist_ok=True)
 
 profil_portugais_df = obtenir_profil_moyen(df, filtres={'Nacionality': 'Portugese'})
@@ -61,8 +61,9 @@ for nat in df['Nacionality'].unique():
         critères_specifiques = {
         'Gender': val_gender,
         'Scholarship holder': 1,
-        #'Educational special needs': 1,
-        'Nacionality': nat
+        'Educational special needs': 1,
+        'Nacionality': nat,
+        'Debtor': 1
     }
     
         eleve_type = obtenir_profil_moyen(df, filtres=critères_specifiques)
