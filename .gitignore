@@ -1,0 +1,12 @@
+# Ton environnement virtuel (remplace par le nom exact du tien si différent)
+aibenv/
+
+# Fichiers de cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dossiers de données (vu ton script précédent)
+# Si tu ne veux pas versionner tes CSV volumineux ou tes résultats
+data/brute/
+data/mean_student/
