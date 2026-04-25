@@ -86,8 +86,8 @@ for stage_name, file_path in files.items():
 
     data_train = pd.concat([X_train, y_train], axis=1)
     data_test = pd.concat([X_test, y_test], axis=1)
-    data_train.to_csv(f"data/bias_eval/train/{stage_name.lower()}_train.csv", index=False)
-    data_test.to_csv(f"data/bias_eval/test/{stage_name.lower()}_test.csv", index=False)
+    data_train.to_csv(f"data/bias_eval/train/{stage_name.lower()}_train.csv", index=False, sep=';')
+    data_test.to_csv(f"data/bias_eval/test/{stage_name.lower()}_test.csv", index=False, sep=';')
 
 
     preprocessor = ColumnTransformer([
