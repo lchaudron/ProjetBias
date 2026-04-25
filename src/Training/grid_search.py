@@ -81,8 +81,14 @@ for stage_name, file_path in files.items():
     y = df['Target']
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42, stratify=y
     )
+
+    data_train = pd.concat([X_train, y_train], axis=1)
+    data_test = pd.concat([X_test, y_test], axis=1)
+    data_train.to_csv(f"data/bias_eval/train/{stage_name.lower()}_train.csv", index=False)
+    data_test.to_csv(f"data/bias_eval/test/{stage_name.lower()}_test.csv", index=False)
+
 
     preprocessor = ColumnTransformer([
         ('num', StandardScaler(), current_cont_cols)
@@ -109,7 +115,7 @@ for stage_name, file_path in files.items():
         print(classification_report(y_test, y_pred))
 
         # Sauvegarde du modèle optimisé
-        model_filename = f"outputs/models/{stage_name}/{model_name.lower().replace(' ', '_')}_best_model.pkl"
+        model_filename = f"outputs/models/Sec_wave/{stage_name}/{model_name.lower().replace(' ', '_')}_best_model.pkl"
         joblib.dump(best_model, model_filename)
         
         
