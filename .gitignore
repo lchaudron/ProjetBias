@@ -11,3 +11,4 @@ __pycache__/
 data/brute/
 data/processed/
 data/mean_student/
+data/final/
